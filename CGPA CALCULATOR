@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <string.h>
+
+float gradepoint(char grade[]) {
+    if (strcmp(grade, "O") == 0) return 10.0;
+    else if (strcmp(grade, "A+") == 0) return 9.0;
+    else if (strcmp(grade, "A") == 0) return 8.0;
+    else if (strcmp(grade, "B+") == 0) return 7.0;
+    else if (strcmp(grade, "B") == 0) return 6.0;
+    else if (strcmp(grade, "C+") == 0) return 5.0;
+    else if (strcmp(grade, "C") == 0) return 4.0;
+    else return 0.0; 
+}
+
+
+float calculate(int num_subjects, float grades[], int credits[]) {
+    float total_points = 0.0;
+    int total_credits = 0;
+    
+    for (int i = 0; i < num_subjects; i++) {
+        total_points += grades[i] * credits[i];
+        total_credits += credits[i];
+    }
+    
+    return total_points / total_credits;
+}
+
+int main() {
+    int num_subjects;
+    
+    printf("Enter the number of subjects: ");
+    scanf("%d", &num_subjects);
+    
+    float grades[num_subjects];
+    int credits[num_subjects];
+    char grade[3]; 
+    
+    for (int i = 0; i < num_subjects; i++) {
+        printf("Enter grade for subject %d : ", i + 1);
+        scanf("%s", grade);
+        grades[i] = gradepoint(grade);
+        
+        printf("Enter credits for subject %d: ", i + 1);
+        scanf("%d", &credits[i]);
+    }
+    
+    printf("\nSubjects\tGrades\tCredits\n");
+    for (int i = 0; i < num_subjects; i++) {
+        printf("Subject %d:\t%.2f\t%d\n", i + 1, grades[i], credits[i]);
+    }
+    
+    float cgpa = calculate(num_subjects, grades, credits);
+    printf("\nYour CGPA is: %.2f\n", cgpa);
+    
+    return 0;
+}
